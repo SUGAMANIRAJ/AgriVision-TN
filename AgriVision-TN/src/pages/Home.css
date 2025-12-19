@@ -1,0 +1,233 @@
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #f7f9fb;
+  color: #1f2937;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+nav {
+  height: 64px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+}
+
+nav .logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #374151;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: #111827;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+  padding: 80px 32px;
+  background: linear-gradient(135deg, #e8f5e9, #ffffff);
+}
+
+.hero-text {
+  max-width: 600px;
+}
+
+.hero-text h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.hero-text span {
+  color: #16a34a;
+}
+
+.hero-text p {
+  font-size: 1.05rem;
+  color: #4b5563;
+}
+
+/* =========================
+   APP SECTION
+========================= */
+.app-section {
+  padding: 80px 24px;
+  display: flex;
+  justify-content: center;
+  background: #f7f9fb;
+}
+
+
+.tool-container {
+  width: 100%;
+  max-width: 900px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   PREDICTOR FORM
+========================= */
+.tool-form {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+}
+
+.tool-form h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.form-grid input,
+.form-grid select {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+}
+
+.form-grid input:focus,
+.form-grid select:focus {
+  outline: none;
+  border-color: #16a34a;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #16a34a;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #15803d;
+}
+
+button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* =========================
+   RESULT PANEL
+========================= */
+.result-panel {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.result-panel h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.result-panel p {
+  font-size: 1.1rem;
+  margin: 6px 0;
+  color: #065f46;
+}
+
+.result-panel small {
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* =========================
+   IPFS CID
+========================= */
+.result-panel code {
+  display: block;
+  margin-top: 8px;
+  padding: 10px;
+  background: #f3f4f6;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+/* =========================
+   LOADER (simple, visible)
+========================= */
+.loader {
+  margin-top: 20px;
+  height: 4px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    #16a34a 0%,
+    #bbf7d0 50%,
+    #16a34a 100%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.2s infinite linear;
+}
+
+@keyframes loading {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 200% 0%;
+  }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .tool-container {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-image {
+    display: none;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
