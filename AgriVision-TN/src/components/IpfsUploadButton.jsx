@@ -13,7 +13,7 @@ export default function IpfsUploadButton({ result, form }) {
       createdAt: new Date().toISOString(),
     };
 
-    const res = await fetch("http://localhost:3000/ipfs/upload", {
+    const res = await fetch("http://localhost:5000/ipfs/upload", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(metadata),
