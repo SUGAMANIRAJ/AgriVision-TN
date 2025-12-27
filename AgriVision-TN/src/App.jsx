@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import Home from "./Pages/Home";
 import FarmerPortal from "./pages/FarmerPortal";
 import BusinessPortal from "./pages/BusinessPortal";
+import FarmerDetails from "./pages/FarmerDetails";
+
 
 export default function App() {
   // TEMP: later this comes from auth / token
@@ -16,6 +18,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/farmer" element={<FarmerPortal />} />
         <Route path="/business" element={<BusinessPortal />} />
+        <Route path="/farmer/:id" element={<FarmerDetails />} />
       </Routes>
     </>
   );

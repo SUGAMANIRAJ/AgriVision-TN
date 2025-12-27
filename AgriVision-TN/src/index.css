@@ -350,3 +350,49 @@ body {
 }
 
 
+/* Market Card Style */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 12px;
+}
+
+.card-body h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.price {
+  color: green;
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.district {
+  font-size: 13px;
+  color: gray;
+}

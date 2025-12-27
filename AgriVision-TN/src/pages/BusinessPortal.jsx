@@ -1,14 +1,34 @@
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../config/firebase";
+import { useEffect, useState } from "react";
+import MarketCard from "../components/MarketCard"
+
 export default function BusinessPortal() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchFarmers = async () => {
+      const snapshot = await getDocs(collection(db, "farmers"));
+
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      setItems(data);
+    };
+
+    fetchFarmers();
+  }, []);
+
   return (
-    <main className="portal-page">
-      <div className="business-card">
-        <div className="icon-badge">💼</div>
-        <h1>Business Dashboard</h1>
-        <p>Access marketplace insights and verified farmer production data.</p>
-        <div className="stats-grid">
-         
-        </div>
-      </div>
-    </main>
+    <div className="grid">
+      {items.map(item => (
+        <MarketCard key={item.id} item={item} />
+      ))}
+    </div>
   );
 }
+
+
+
