@@ -14,6 +14,7 @@ export default function MintReportNFT({ cid, farmerAddress}) {
   const [txHash, setTxHash] = useState(null);
 
   const mint = async () => {
+  try {
     if (!cid) {
       alert("Upload to IPFS first");
       return;
@@ -39,13 +40,32 @@ export default function MintReportNFT({ cid, farmerAddress}) {
     );
 
     await tx.wait();
+
+    // 🔑 GET TOKEN ID
+    const tokenId = Number(await contract.tokenCounter()) - 1;
+
     setTxHash(tx.hash);
 
-    const farmerRef = doc(db, 'farmers', farmerAddress);
-    setDoc(farmerRef, { price: price, tx_hash: tx.hash }, { merge: true });
+    // ✅ SAVE EVERYTHING
+    const farmerRef = doc(db, "farmers", farmerAddress);
+    await setDoc(
+      farmerRef,
+      {
+        price: price,
+        tokenId: tokenId,
+        tx_hash: tx.hash,
+      },
+      { merge: true }
+    );
 
+    alert(`NFT Minted Successfully (Token ID: ${tokenId})`);
 
-  };
+  } catch (err) {
+    console.error(err);
+    alert(err.reason || err.message || "Mint failed");
+  }
+};
+
 
   return (
     <div className="mint-nft-container">
