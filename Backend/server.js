@@ -1,4 +1,6 @@
 require("dotenv").config();
+const axios = require('axios'); 
+
 
 //Express creates the sever from where the HTTPs req and res all are handled & CORS - It is used to allow Cross origin req (By default , browser not allowed bcz, React-5173 != Node-5000),so frontend and backend can talk eachother now !
 const express = require("express");
@@ -10,7 +12,7 @@ const path = require("path");
 
 
 const app = express();
-const PORT = 5000;
+const PORT = 3000;
 
 
 
@@ -24,14 +26,46 @@ app.get("/", (req,res)=>{
 });
 
 
-app.post("/predict", (req,res) => {
-    res.json({
-        production_kg : 10000,
-        revenue_inr:20000000,
-        yield_per_acre:222,
-        success:true
+
+app.post("/predict", async (req, res) => {
+  try {
+    // 1. Get data sent from your frontend (Form or JSON)
+    const { district, crop, season, area, rainfall } = req.body;
+
+    // 2. Forward the data to the Flask Server (Running on Port 5000)
+    // Ensure your Python app is running before calling this!
+    const flaskResponse = await axios.post("http://127.0.0.1:5000/predict", {
+      district: district,
+      crop: crop,
+      season: season,
+      area: area,
+      rainfall: rainfall,
     });
+
+    // 3. Extract the dynamic results from the Python response
+    const predictionData = flaskResponse.data;
+
+    // 4. Send the real ML data back to your frontend
+    res.json({
+      production_kg: predictionData.production_kg,
+      revenue_inr: predictionData.revenue_inr,
+      yield_per_acre: predictionData.yield_per_acre,
+      crop: predictionData.crop,
+      price_used: predictionData.price_used,
+      success: true,
+    });
+  } catch (error) {
+    console.error("Error communicating with Python ML server:", error.message);
+
+    // Handle cases where Python server might be down
+    res.status(500).json({
+      success: false,
+      message: "The ML prediction engine is currently unreachable.",
+      error: error.message,
+    });
+  }
 });
+
 
 
 app.post("/ipfs/upload", async (req, res) => {

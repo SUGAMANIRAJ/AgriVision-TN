@@ -1,68 +1,352 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --primary: #2ecc71;
+  --dark: #219150;
+  --bg-light: #f4f7f6;
+  --white: #ffffff;
+  --text-main: #2d3436;
+  --text-muted: #636e72;
+  --glass: rgba(255, 255, 255, 0.9);
+  --shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
-  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* --- NAVBAR --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 80px;
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  align-items: center;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+}
+
+.navbar-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.4rem; }
+.logo .highlight { color: var(--primary); }
+
+.nav-links { display: flex; gap: 30px; }
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-weight: 600;
+  transition: 0.3s;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
+}
+.nav-links a:hover, .nav-links a.active {
+  color: var(--primary);
+  border-bottom: 2px solid var(--primary);
+}
+
+/* --- PORTAL PAGES --- */
+.portal-page {
+  padding-top: 120px;
   min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.portal-header { text-align: center; margin-bottom: 40px; }
+.portal-header h1 { font-size: 2.5rem; color: var(--text-main); }
+
+/* --- THE TOOL CONTAINER (Replica of HTML) --- */
+.tool-container {
+  display: flex;
+  background: var(--white);
+  border-radius: 30px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 50px;
 }
 
-button {
+.tool-image {
+  flex: 0.8;
+  background: url('https://i.ytimg.com/vi/ldYAX1xME0M/maxresdefault.jpg') center/cover;
+  position: relative;
+  min-height: 500px;
+}
+
+.tool-overlay {
+  position: absolute; bottom: 0; left: 0; width: 100%; padding: 2rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white;
+}
+
+.tool-form { flex: 1.2; padding: 3rem; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.full-width { grid-column: span 2; }
+
+.input-group label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
+.input-group input, .input-group select {
+  width: 100%; padding: 12px; border: 2px solid #eee; border-radius: 10px; outline: none; transition: 0.3s;
+}
+.input-group input:focus { border-color: var(--primary); }
+
+.btn-predict {
+  width: 100%; padding: 15px; background: var(--dark); color: white;
+  border: none; border-radius: 10px; font-weight: 700; cursor: pointer; margin-top: 20px;
+}
+
+/* --- RESULT PANEL --- */
+.result-panel {
+  background: #f0fdf4; border: 1px solid #bbf7d0;
+  padding: 1.5rem; border-radius: 15px; margin-top: 20px;
+}
+.result-row { display: flex; justify-content: space-between; align-items: center; }
+.big-number { font-size: 1.8rem; font-weight: 700; color: var(--dark); }
+
+/* --- BUSINESS PORTAL SPECIFIC --- */
+.business-card {
+  background: white; padding: 4rem; border-radius: 30px; text-align: center;
+  box-shadow: var(--shadow); max-width: 600px; margin: 40px auto;
+}
+.icon-badge { font-size: 4rem; margin-bottom: 20px; }
+.stats-grid { display: flex; gap: 20px; justify-content: center; margin-top: 30px; }
+.stat-item { background: var(--bg-light); padding: 20px; border-radius: 15px; flex: 1; }
+.stat-item span { display: block; font-size: 1.5rem; font-weight: 700; color: var(--primary); }
+
+/* --- IPFS BUTTON CONTAINER --- */
+.ipfs-container {
+  margin-top: 20px;
+  padding: 15px;
+  border: 2px dashed var(--primary);
+  border-radius: 10px;
+  text-align: center;
+}
+
+/* --- LOADER --- */
+.loader { height: 4px; background: #eee; border-radius: 2px; overflow: hidden; margin-top: 15px; }
+.loader-bar { height: 100%; background: var(--primary); width: 40%; animation: load 1s infinite; }
+@keyframes load { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+
+@media (max-width: 900px) {
+  .tool-container { flex-direction: column; }
+  .tool-image { min-height: 250px; }
+  .form-grid { grid-template-columns: 1fr; }
+}
+
+.role-badge {
+  background: var(--bg-light);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-right: 15px;
+  border: 1px solid var(--primary);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--text-muted);
+  padding: 8px 20px;
   border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: 0.3s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.btn-secondary:hover {
+  background: var(--text-main);
+  color: white;
+}
+
+/* --- Home Page Layout --- */
+.home-hero {
+  padding-top: 100px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+}
+
+.welcome-section { text-align: center; width: 90%; max-width: 1100px; }
+.welcome-section h1 { font-size: 3rem; margin-bottom: 1rem; }
+.welcome-section h1 span { color: var(--primary); }
+
+.portal-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.path-card {
+  background: white;
+  padding: 3rem;
+  border-radius: 25px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow);
+  transition: 0.4s;
+  border: 2px solid transparent;
+}
+
+.path-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+}
+
+.path-icon { font-size: 4rem; margin-bottom: 1.5rem; }
+.path-card h2 { margin-bottom: 1rem; color: var(--dark); }
+.path-card p { color: var(--text-muted); margin-bottom: 2rem; }
+
+.btn-path {
+  background: var(--dark);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 50px;
+  font-weight: 600;
+}
+
+/* --- Farmer Portal / IPFS Section --- */
+.ipfs-section {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 20px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.ipfs-info h4 { color: var(--text-main); margin-bottom: 0.5rem; }
+.ipfs-info p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .portal-cards { grid-template-columns: 1fr; }
+}
+
+
+/* ===== IPFS Upload Button ===== */
+.ipfs-upload-btn {
+  background: linear-gradient(135deg, var(--primary), var(--dark));
+  color: white;
+  padding: 12px 26px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 20px rgba(46, 204, 113, 0.3);
+}
+
+.ipfs-upload-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(46, 204, 113, 0.4);
+}
+
+.ipfs-upload-btn:disabled {
+  background: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ===== CID Display ===== */
+.ipfs-cid {
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: #020617;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  color: #38bdf8;
+  word-break: break-all;
+  border: 1px solid #1e293b;
+}
+
+/* ===== Subtle Fade-in ===== */
+.ipfs-cid {
+  animation: ipfsFade 0.3s ease-in-out;
+}
+
+@keyframes ipfsFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
+
+/* ===== Mint NFT Section ===== */
+.mint-nft-container {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.mint-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: 0.25s;
+}
+
+.mint-input:focus {
+  border-color: var(--primary);
+}
+
+.mint-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+}
+
+.mint-btn:hover {
+  transform: translateY(-2px);
+}
+
+.mint-success {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+
+.mint-success span {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+

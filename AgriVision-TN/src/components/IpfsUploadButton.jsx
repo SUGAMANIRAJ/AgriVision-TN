@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { doc, setDoc } from "firebase/firestore"; 
+import {db} from "../../config/firebase"
 
-export default function IpfsUploadButton({ result, form }) {
+
+export default function IpfsUploadButton({ farmerAddress, result, form, onUploaded }) {
   const [loading, setLoading] = useState(false);
   const [cid, setCid] = useState(null);
 
@@ -8,12 +11,13 @@ export default function IpfsUploadButton({ result, form }) {
     setLoading(true);
 
     const metadata = {
+      farmer_address: farmerAddress,
       input: form,
       output: result,
       createdAt: new Date().toISOString(),
     };
 
-    const res = await fetch("http://localhost:5000/ipfs/upload", {
+    const res = await fetch("http://localhost:3000/ipfs/upload", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(metadata),
@@ -21,15 +25,39 @@ export default function IpfsUploadButton({ result, form }) {
 
     const data = await res.json();
     setCid(data.cid);
+    onUploaded(data.cid);
+
+    await setDoc(doc(db, "farmers",farmerAddress), {
+            farmer_address: farmerAddress,
+            cid : data.cid,
+            crop : form.crop,
+            district : form.district
+          });
+
     setLoading(false);
+
+    
+
   };
 
   return (
     <>
-      <button onClick={upload} disabled={loading}>
+    <br/>
+    <br/>
+      <button
+        onClick={upload}
+        disabled={loading}
+        className="ipfs-upload-btn"
+      >
         {loading ? "Uploading..." : "Upload to IPFS"}
       </button>
-      {cid && <code>{cid}</code>}
+      <br/>
+      <br/>
+      {cid && <code className="ipfs-cid">{cid}</code>}
+
+      <br/>
+    <br/>
     </>
+    
   );
 }
