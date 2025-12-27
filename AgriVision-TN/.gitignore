@@ -1,7 +1,5 @@
 .env
-config/firebase.js
-
-config/firebase.js
+firebase.js
 # Logs
 logs
 *.log
